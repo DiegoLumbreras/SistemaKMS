@@ -1,0 +1,242 @@
+<template>
+
+
+-->
+
+  <!--MODAL PARA RENOMBRAR NODO-->
+  <div id="RenameNodeModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
+    role="dialog">
+    <h2 id="modalTitle">Rename Node</h2>
+    <form id="RenameNodeForm">
+      <div class="row">
+        <div class="large-12 columns">
+          <label>Node name
+            <input type="text" class="inputName" id='RenameNodeName' placeholder="node name" />
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-8 columns">
+          &nbsp;
+        </div>
+        <div class="large-4 columns">
+          <a href="#" class="button info" onclick="close_rename_node_modal()">Cancel</a>
+          <a href="#" class="button success" onclick="rename_node()">Rename</a>
+        </div>
+      </div>
+    </form>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+  </div>
+
+  <!--MODAL PARA CEAR NODO-->
+  <div id="CreateNodeModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
+    role="dialog">
+    <h2 id="modalTitle">Create Node</h2>
+    <form id="CreateNodeForm">
+      <div class="row">
+        <div class="large-12 columns">
+          <label>Node name
+            <input type="text" class="inputName" id='CreateNodeName' placeholder="node name" />
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-8 columns">
+          &nbsp;
+        </div>
+        <div class="large-4 columns">
+          <a href="#" class="button info" onclick="close_create_node_modal()">Cancel</a>
+          <a href="#" class="button success" onclick="create_node()">Create</a>
+        </div>
+      </div>
+    </form>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+  </div>
+  <!--MODAL PARA AÑADIR UN NUEVO PADRE AL NODO-->
+
+  <div id="NewParentModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
+    role="dialog">
+    <select id="nodesSelect" class="js-example-basic-multiple">
+    </select>
+    <div class="row">
+      <div class="large-8 columns">
+        &nbsp;
+      </div>
+      <div class="large-4 columns">
+        <a href="#" class="button success" onclick="createParentConection()">Create</a>
+      </div>
+    </div>
+  </div>
+  <!--MODAL PARA BORRAR UN  PADRE AL NODO-->
+  <div id="DeleteParentModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
+    role="dialog">
+    <select id="deleteParentSelect" class="js-example-basic-multiple">
+    </select>
+    <div class="row">
+      <div class="large-8 columns">
+        &nbsp;
+      </div>
+      <div class="large-4 columns">
+        <a href="#" class="button success" onclick="deleteParent()">Delete</a>
+      </div>
+    </div>
+  </div>
+  <div id="DeleteNodeModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
+    role="dialog">
+
+    <select id="optionsDelete" class="js-example-basic-multiple">
+      <option value="1">Borrar Todos</option>
+      <option value="2">Hacer padre al abuelo</option>
+      <option value="3">Cambiar de padre a un hijo</option>
+      <option value="4">Cambiar de padre</option>
+
+    </select>
+
+
+
+
+    <select id="nodesSelectAllDelete" name="selectName" class="js-example-basic-multiple">
+    </select>
+
+
+    <select id="nodesSelectChildNewParent" name="selectName" class="js-example-basic-multiple">
+    </select>
+
+
+    <div class="row">
+      <div class="large-8 columns">
+        &nbsp;
+      </div>
+      <div class="large-4 columns">
+        <a href="#" class="button success" onclick="delete_node(node_to_delete)">Aceptar</a>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div id="tree-container" style="width: 50%; height: 50%; ">
+       <input type="checkbox" class="custom-control-input" id="horizontalVertical">
+    <label class="custom-control-label" for="horizontalVertical">Horizontal</label>
+  </div>
+
+                    
+                    
+                    
+                    
+                  </div>
+                  </div>
+              </div>
+                  </div>
+                </div>
+                          
+              
+              </div> 
+						
+					</div>
+				  </div>
+			    </div>
+		      </div>
+
+			  </div>
+			<!-- content-wrapper ends -->
+			<!-- partial:partials/_footer.html -->
+			<footer class="footer">
+			  <div class="container-fluid clearfix">
+				<span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2020 - Universidad Politecnica de Victoria <a href="http://www.upvictoria.edu.mx/" target="_blank">Upv</a>. Todos los derechos reservados.</span>
+				<span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Sistema de gestion de conocimiento en la estructura de matematicas<i class="fa fa-plus-circle" aria-hidden="true"></i>
+				</span>
+			  </div>
+			</footer>
+			<!-- partial -->
+		  </div>
+		  <!-- main-panel ends -->
+		</div>
+		<!-- page-body-wrapper ends -->
+	  </div>
+
+
+	  {{script('arbol/d3.v3.min.js')}}
+	  {{script('arbol/dndTree.js')}}
+	  {{script('arbol/treeFunctions.js')}}
+	  {{script('arbol/d3-context-menu.js')}}
+	  {{script('arbol/underscore-min.js')}}
+	  {{script('arbol/jquery.js')}}
+	  {{script('arbol/fastclick.js')}}
+	  {{script('arbol/foundation.min.js')}}
+		{{script('./node_modules/jquery/dist/jquery.js')}}
+	
+	  {{script('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}
+	  {{script('https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js')}}
+		{{ script('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js') }}
+		
+		{{script('js/principal.js')}}
+
+
+
+</template>
+
+
+    <script>
+			import $ from 'jquery';
+
+			
+
+			$('document').ready(function () {
+      $('.js-example-basic-multiple').select2();
+      $('#nodesSelect').select2();
+      $('#nodesSelectAllDelete').select2();
+      $('#nodesSelectChildNewParent').select2();
+      $('#nodesSelectAllDelete').next(".select2-container").hide();
+      $('#nodesSelectChildNewParent').next(".select2-container").hide();
+
+      $("#horizontalVertical").change(function (e) {
+        // alert("Handler for .change() called. ");
+
+        horizontalVertical = !horizontalVertical;
+        outer_update(tree_root);
+
+      });
+
+
+      var $optionsDelete = $("#optionsDelete").select2().on("change", function (e) {
+        var optionsS = $('#optionsDelete').select2('data')
+        let deleteOption = optionsS[0]['id'];
+        if (deleteOption == 4) {
+          $('#nodesSelectAllDelete').next(".select2-container").show();
+          $('#nodesSelectChildNewParent').next(".select2-container").hide();
+
+        } else if (deleteOption == 3) {
+          $('#nodesSelectChildNewParent').next(".select2-container").show();
+          $('#nodesSelectAllDelete').next(".select2-container").hide();
+        } else {
+          $('#nodesSelectAllDelete').next(".select2-container").hide();
+          $('#nodesSelectChildNewParent').next(".select2-container").hide();
+
+        }
+
+      });
+
+
+      $(document).foundation();
+      $(document).on('opened', '[data-reveal]', function () {
+        var element = $(".inputName:visible").first();
+        element.focus(function () {
+          this.selectionStart = this.selectionEnd = this.value.length;
+        });
+        element.focus();
+      });
+      $('#RenameNodeForm').submit(function (e) {
+        rename_node();
+        return false;
+      });
+      $('#CreateNodeForm').submit(function (e) {
+        create_node();
+        return false;
+      });
+
+
+
+      var treeJSON = d3.json("tree.json", draw_tree);
+    });
+		</script>

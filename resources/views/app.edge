@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"> 
+	<title>Sistema de gestion de conocimiento - Estructura de matematicas</title>
+	
+
+	{{ style('css/main.css') }}
+	{{style('awesome/css/font-awesome.min.css')}}
+  	{{style('images/favicon.png')}}
+		{{style('arbol/foundation.css')}}
+		{{style('arbol/app.css')}}
+		{{style('arbol/d3-context-menu.css')}}
+		{{style('arbol/select2.css')}}
+	
+
+
+
+
+
+</head>
+<body>  
+    <div class="container-scroller">
+
+		<nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+		  <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+				<a class="navbar-brand brand-logo" href="#">
+					<img src="/images/logo.png" style="background-color:white;" alt="logo"/> 
+				</a>
+		  </div>
+		  <div class="navbar-menu-wrapper d-flex align-items-center">
+				<ul class="navbar-nav ml-auto">
+					<a class="dropdown-item" href="/logout"><i class="fa fa-times-circle" style="margin-left 10px;"></i>Cerrar Sesion</a>	 
+				</ul>
+		  </div>
+		</nav>
+		<!-- partial -->
+			@include('menuAdministrador')
+		<!-- partial -->
+		  <div class="main-panel">
+		
+			  
+			  <!--Componentes de vuejs-->
+			  <div class="row">
+				<div class="col-md-12 grid-margin">
+				 
+								<div id="app"></div>    
+						
+					 </div>
+				  </div>
+			    </div>
+		      </div>
+
+			  </div>
+			<!-- content-wrapper ends -->
+			<!-- partial:partials/_footer.html -->
+			<footer class="footer">
+			  <div class="container-fluid clearfix">
+				<span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2020 - Universidad Politecnica de Victoria <a href="http://www.upvictoria.edu.mx/" target="_blank">Upv</a>. Todos los derechos reservados.</span>
+				<span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Sistema de gestion de conocimiento en la estructura de matematicas<i class="fa fa-plus-circle" aria-hidden="true"></i>
+				</span>
+			  </div>
+			</footer>
+			<!-- partial -->
+		  </div>
+		  <!-- main-panel ends -->
+		</div>
+		<!-- page-body-wrapper ends -->
+	  </div>
+		
+
+	  
+	   
+    {{script('js/main.js')}}
+		{{script('js/principal.js')}}
+	  
+			  				
+	  {{script('/arbol/d3.v3.min.js')}}
+		{{script('/arbol/treeFunctions.js')}}
+		{{script('/arbol/dndTree.js')}}
+		
+		{{script('/arbol/d3-context-menu.js')}}
+		{{script('/arbol/underscore-min.js')}}
+		{{script('https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js')}}
+		{{script('/arbol/jquery.js')}}
+		{{script('/arbol/fastclick.js')}}
+		{{script('/arbol/foundation.min.js')}}
+		
+		{{script('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}
+		{{script('https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js')}}
+	  
+	  
+		
+
+		
+		
+		
+		
+ 
+		
+		
+		
+</body>
+</html>

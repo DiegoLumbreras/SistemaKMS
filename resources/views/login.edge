@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {{ style('css/main.css') }}
+
+    {{style('awesome/css/font-awesome.min.css')}}
+    <title>Login</title>
+</head>
+<body>
+    <div class="container-scroller" style="background-color:black;">
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
+          <div class="row w-100">
+            <div class="col-lg-4 mx-auto">
+              <div class="auto-form-wrapper">
+                <form action="/login" method="POST">
+									{{ csrfField() }}
+                  <div class="form-group">
+                    <label class="label">Matricula</label>
+                    <div class="input-group">
+										<input type="text" class="form-control" placeholder="Matricula" name="matricula" id="matricula" >
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                          <i class="fa fa-user-o" ></i>
+                        </span>
+                      </div>
+                    </div>
+										{{ elIf('<span class="invalid-feefback">$self</span>', getErrorFor('matricula'), hasErrorFor('matricula')) }} 
+                  </div>
+                  <div class="form-group">
+                    <label class="label">Contraseña</label>
+                    <div class="input-group">
+                      <input type="password" class="form-control " placeholder="*********" name="password" id="password">
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                          <i class="fa fa-key" ></i>
+                        </span>
+                      </div>											
+                    </div>
+										{{ elIf('<span class="invalid-feefback">$self</span>', getErrorFor('password'), hasErrorFor('password')) }}
+                  </div>
+                  <div class="form-group">
+                    <button class="btn btn-primary submit-btn btn-block" type="submit">Login</button>
+                  </div>
+                  <div class="form-group d-flex justify-content-between">
+              
+                    <a href="#" class="text-small forgot-password text-black">Olvide la contraseña</a>
+                  </div>
+                </form>
+              </div>
+              <ul class="auth-footer">
+                <li>
+                  <a href="/" style="color:black">Condiciones</a>
+                </li>
+                <li>
+                  <a href="/" style="color:black">Ayuda</a>
+                </li>
+                <li>
+                  <a href="/" style="color:black" >Terminos</a>
+                </li>
+              </ul>
+              <p class="footer-text text-center" style="color:black">copyright © 2020 Todos los derechos reservados a la Universidad Politecnica de victoria.</p>
+            </div>
+          </div>
+        </div>
+     
+      </div>
+
+    </div>
+    {{script('js/principal.js')}}
+		
+
+</body>
+</html>

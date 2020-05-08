@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"> 
+	<title>Sistema de gestion de conocimiento - Estructura de matematicas - Experto</title>
+	{{ style('css/main.css') }}
+
+	{{style('awesome/css/font-awesome.min.css')}}
+	
+    <link rel="shortcut icon" href="images/favicon.png" />
+
+</head>
+<body>  
+    <div class="container-scroller">
+
+		<nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+		  <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+			<a class="navbar-brand brand-logo" href="#">
+			  <img src="images/logo.png" style="background-color:white;" alt="logo"/> </a>
+			<a class="navbar-brand brand-logo-mini" href="#">
+			  <img src="logo.png" alt="logo" /> </a>
+		  </div>
+		  <div class="navbar-menu-wrapper d-flex align-items-center">
+			<ul class="navbar-nav ml-auto">
+        @loggedIn
+ <a class="dropdown-item" href="/logout"><i class="fa fa-times-circle" style="margin-left 10px;"></i>Cerrar Sesion</a>
+@else
+   <a href="/">Click here</a> to login.
+@endloggedIn
+				 
+			</ul>
+			<button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+			  <span class="fa fa-plus-circle"></span>
+			</button>
+		  </div>
+		</nav>
+		<!-- partial -->
+		<div class="container-fluid page-body-wrapper" >
+		  <!-- partial:partials/_sidebar.html -->
+		  <nav class="sidebar sidebar-offcanvas" id="sidebar" >
+			<ul class="nav">
+			  <li class="nav-item nav-profile" >
+				<a href="#" class="nav-link" style="margin-top:10px;">
+				  <div class="profile-image" >
+					<img class="img-xs rounded-circle" src="images/faces/face8.jpg" alt="profile image">
+					<div class="dot-indicator bg-success"></div>
+				  </div>
+				  <div class="text-wrapper">
+					@loggedIn
+					<p class="profile-name">Administrador</p>
+					@endloggedIn
+					<p class="designation">Usuario</p>
+				  </div>
+				</a>
+			  </li>
+			  <li class="nav-item nav-category">Menu Principal</li>
+			  <li class="nav-item">
+				<a class="nav-link" href="/">
+				  <i class="fa fa-bars" aria-hidden="true"></i>
+				  <span class="menu-title">Dashboard</span>
+				</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link" href="/experto/app/informacion_personal">
+				  <i class="fa fa-user" ></i>
+				  <span class="menu-title">Infomracion personal</span>
+				</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link" href="/experto/app/arbol">
+				  <i class="fa fa-handshake-o"></i>
+				  <span class="menu-title">Estructura de temas</span>
+				</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link" href="/experto/app/preguntas">
+				  <i class="fa fa-question" ></i>
+				  <span class="menu-title">Preguntas</span>
+				</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link" href="/experto/app/nodos">
+				  <i class="fa fa-eercast"></i>
+				  <span class="menu-title">Temas</span>
+				</a>
+			  </li>
+			</ul>
+		  </nav>
+		  <!-- partial -->
+		  <div class="main-panel">
+		
+			  
+			  <!--Componentes de vuejs-->
+			  <div class="row">
+				<div class="col-md-12 grid-margin">
+				 
+								<div id="app"></div>    
+						
+					 </div>
+				  </div>
+			    </div>
+		      </div>
+
+			  </div>
+			<!-- content-wrapper ends -->
+			<!-- partial:partials/_footer.html -->
+			<footer class="footer">
+			  <div class="container-fluid clearfix">
+				<span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2020 - Universidad Politecnica de Victoria <a href="http://www.upvictoria.edu.mx/" target="_blank">Upv</a>. Todos los derechos reservados.</span>
+				<span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Sistema de gestion de conocimiento en la estructura de matematicas<i class="fa fa-plus-circle" aria-hidden="true"></i>
+				</span>
+			  </div>
+			</footer>
+			<!-- partial -->
+		  </div>
+		  <!-- main-panel ends -->
+		</div>
+		<!-- page-body-wrapper ends -->
+	  </div>
+	 
+    {{script('js/main.js')}}
+
+	{{script('js/principal.js')}}
+
+
+</body>
+</html>

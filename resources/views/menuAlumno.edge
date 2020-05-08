@@ -1,0 +1,79 @@
+
+		<div class="container-fluid page-body-wrapper" >
+		  <!-- partial:partials/_sidebar.html -->
+		  <nav class="sidebar sidebar-offcanvas" id="sidebar" >
+				<ul class="nav">
+						<li class="nav-item nav-profile" >
+							<center>
+							<a href="#" class="nav-link" style="margin-top:0px;">
+								<div class="profile-image" >
+									<img class="img-xs rounded-circle" src="/images/faces/face8.jpg" alt="profile image">
+									<div class="dot-indicator bg-success"></div>
+								</di>
+								<div class="text-wrapper">
+									@if( auth.user.id_rol == 2)
+									<p class="profile-name">    Alumno</p>
+									@endif
+									<p class="designation">   {{ auth.user.nombre}} {{ auth.user.apellido_paterno}}</p>
+								</div>
+							</a>
+						</li>
+						<li class="nav-item nav-category">Menu Principal</li>
+						
+						<li class="nav-item">
+						<a class="nav-link" href="/admins/app">
+							<i class="fa fa-home" ></i>
+							<span class="menu-title">Inicio</span>
+						</a>
+						</li>						
+						
+						<li class="nav-item">
+						<a class="nav-link" href="/admins/app/admin">
+							<i class="fa fa-lock" ></i>
+							<span class="menu-title">Administrador</span>
+						</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link" href="/admins/app/profesores">
+							<i class="fa fa-pencil"></i>
+							<span class="menu-title">Profesores</span>
+						</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link" href="/admins/app/alumno">
+							<i class="fa fa-users"></i>
+							<span class="menu-title">Alumnos</span>
+						</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link" href="/admins/app/experto">
+							<i class="fa fa-user" ></i>
+							<span class="menu-title">Expertos</span>
+						</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link" href="/admins/app/arbol">
+							<i class="fa fa-handshake-o"></i>
+							<span class="menu-title">Estructura de temas</span>
+						</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link" href="/admins/app/preguntas">
+							<i class="fa fa-question" ></i>
+							<span class="menu-title">Cuestionario</span>
+						</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link" href="/admins/app/historial">
+							<i class="fa fa-eercast"></i>
+							<span class="menu-title">Historial de alumnos</span>
+						</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link" href="/admins/app/temas">
+							<i class="fa fa-eercast"></i>
+							<span class="menu-title">Temas</span>
+						</a>
+						</li>						
+				</ul>
+		  </nav>
