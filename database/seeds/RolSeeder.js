@@ -18,7 +18,7 @@ class RolSeeder {
   async run () {
 		 //const users = await Database.table('rols') console.log(rols)	
 		//const user = await Factory.model('App/Models/Rol') .create({ tipo_rol: 'admin' })
-		/*const Administrador = await Database.from('rols').insert([{tipo_rol: 'Administrador'}])		
+		const Administrador = await Database.from('rols').insert([{tipo_rol: 'Administrador'}])		
 		const Experto = await Database.from('rols').insert([{tipo_rol: 'Experto'}])
 		const Maestro = await Database.from('rols').insert([{tipo_rol: 'Maestro'}])
 		const Alumno = await Database.from('rols').insert([{tipo_rol: 'Alumno'}])
@@ -46,11 +46,7 @@ class RolSeeder {
 																									id_rol: '2'}])	
 		
 	
-		//await Database.raw('DROP TRIGGER IF EXISTS TEMA_AD')
-		//await Database.raw('CREATE TRIGGER TEMA_AD AFTER DELETE ON temas FOR EACH ROW DELETE FROM relacion_primarias WHERE relacion_primarias.id_hijo=OLD.id')
-		//await Database.raw('DROP TRIGGER IF EXISTS RELACION_TEMA_AD')
-		//await Database.raw('CREATE TRIGGER RELACION_TEMA_AD AFTER DELETE ON relacion_primarias FOR EACH ROW DELETE FROM temas WHERE temas.id=OLD.id_hijo;')
- */
+	
 
 		await Database.from('temas').insert([{
 			'nombre_tema':'Padre',

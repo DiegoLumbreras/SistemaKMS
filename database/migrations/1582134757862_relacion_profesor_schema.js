@@ -7,8 +7,8 @@ class RelacionProfesorSchema extends Schema {
   up () {
     this.create('relacion_profesors', (table) => {
       table.increments()
-      table.integer('id_profesor')
-      table.integer('id_alumno')
+      table.integer('id_profesor').unsigned().references('id').inTable('users')
+      table.integer('id_alumno').unsigned().references('id').inTable('users')
     })
   }
 

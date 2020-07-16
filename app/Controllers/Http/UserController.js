@@ -6,6 +6,7 @@ const Hash = use('Hash')
 const Database = use('Database')
 
 class UserController {
+  
 		async registrar({request,response}){
         const{nombre,apellido_paterno,apellido_materno,matricula,password,nivel_academico,id_rol} = request.only(
         [
