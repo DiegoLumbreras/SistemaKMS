@@ -31,7 +31,7 @@
     "@adonisjs/session": "^1.0.27",
     "@adonisjs/shield": "^1.0.8",
     "@adonisjs/validator": "^5.0.6",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "foundation-sites": "^6.6.3",
     "jquery": "^3.5.0",
     "laravel-mix": "^5.0.1",
