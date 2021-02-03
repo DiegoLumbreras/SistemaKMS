@@ -6,12 +6,29 @@ class TemaController {
 
 	///Eliminar padre secundario
 	async deleteNodoSecundarioRelation({response,request}){
-			const {id_padre,id_hijo}= request.only(['id_padre','id_hijo']) 
-			const array=[id_padre,id_hijo,'secundarias']
-			const eliminarPadreSecundario = await Database.table('relacion_primarias').whereRaw('id_padre = ? AND id_hijo = ? AND tipo = ?',array).delete()
+    var obtenerOtroPadre = [];
+    const {id_padre,id_hijo,tipo}= request.only(['id_padre','id_hijo','tipo']) 
+    
+    
+    if(tipo == 1){
+       const array=[id_padre,id_hijo,'primarias']
+       const eliminarPadrePrimario = await Database.table('relacion_primarias').whereRaw('id_padre = ? AND id_hijo = ? AND tipo = ?',array).delete()
+       
+       obtenerOtroPadre = await Database.raw('select * from relacion_primarias WHERE id_hijo = ?;', [id_hijo])
+       var id_actualizar = obtenerOtroPadre[0][0].id;
+       await Database.raw('update relacion_primarias set tipo = ? WHERE id = ?;', [ 'primarias', id_actualizar ])
+       
+    }else{
+      const array=[id_padre,id_hijo,'secundarias']
+      const eliminarPadreSecundario = await Database.table('relacion_primarias').whereRaw('id_padre = ? AND id_hijo = ? AND tipo = ?',array).delete()
+    }
+    
+    
 
-			return response.json({message:'Actualizado'})
-		}	
+    return response.json({message: "eliminado"})
+  }	
+  
+  
 	//const eliminarPadreSecundario = await Database.table('relacion_primarias').whereRaw('id_padre = ? AND id_hijo = ? AND tipo = ?',array).delete()
 	//Cambia el padre y modifica el nombre del nodo
 	async editarNodo({response,request}){
@@ -98,18 +115,20 @@ class TemaController {
   
   	///Cambia padre 
 	async cambiarPadre({response,request}){
-    const{id,id2}= request.only(
+    const{id,id2,hijo,color}= request.only(
         [
-            'id',
-						'id2'
-           
+            'id', //padre viejo
+						'id2', //padre nuvo
+            'hijo',
+            'color'
         ]) 
     
 		const affectedRows = await Database
 		.table('relacion_primarias')
-		.where('id_hijo', id)
-		.where('tipo', "primarias")
+		.where('id_padre', id)
+    .where('id_hijo', hijo)
 		.update('id_padre', id2)
+    .update('color', color)
      
     await  this.updateLevels(id2)
 		return response.json({message:'Cambo padre'})
@@ -190,8 +209,14 @@ class TemaController {
   
  
        var totalTopics = temas.length;
-      
-     while (totalTopics > 1) {
+      var totalDeTemas = temas.length;
+     
+      //PROPENSO A CICLOS INFINITOS
+      // totalTopis = 0 --- totalTopics > 1
+			//for(var k = totalTopics; k > 1; k--){
+			//var limite = 0;
+      while (totalTopics > 1) {
+      //for(var k=0; k > temas.length; k++){
         totalTopics = temas.length;  
        var totalRelations = relaciones.length;
         for (var i = 0; i < totalTopics; i++) {
@@ -223,14 +248,17 @@ class TemaController {
             }
             break;
         }
-
+// 				limite++;
+// 				if(limite == 10000)
+// 					break;
     }
       
       var relations={
         "treeStructure":temas[0],
         "extraParent":relacionesSecundarias
       };
-              return response.json(relations)
+							return response.json(relations)
+              //return response.json({"relaciones":relations, "Total de temas": totalDeTemas})
 
     }
     //mostrar el arbol base(estructura de temas) nodos secundarios
@@ -288,32 +316,38 @@ class TemaController {
     }	
   //registrar nodo con padre principal - listo
   async registrar({response,request}){
-    const{nombre_tema,id_padre,textPosition} = request.only(
+    const{nombre_tema,id_padre,textPosition,color,freey} = request.only(
         [
             'nombre_tema',
             'id_padre',
-						'textPosition'
+						'textPosition',
+            'color',
+            'freey'
         ]) 
+    
+    
 		const tema_padre= await Database.select('*').from('temas').where('id', id_padre);
 		const nivel_tema= tema_padre[0].nivel+1
-		const freey= tema_padre[0].freey+100
+		//const freeyy= freey//tema_padre[0].freey+100
 		const freex= tema_padre[0].freex
    	const temaId = await Database .insert({nombre_tema:nombre_tema,nivel:nivel_tema,freex:freex,freey:freey,textPosition:textPosition}).into('temas')
    	const dametema = await Database.from('temas').getMax('id')                                
    
-   	const relacion= await Database .insert({id_padre:id_padre,id_hijo:dametema,tipo:'primarias'}).into('relacion_primarias')
+   	const relacion= await Database .insert({id_padre:id_padre,id_hijo:dametema,tipo:'primarias',color:color}).into('relacion_primarias')
     return response.json({message:'Creado',newId:temaId})
   }
   
   //registrarpadre secundario - listo
    async registrar_secundario({response,request}){
-    const{id_padre,id_hijo} = request.only(
+     
+    const{id_padre,id_hijo, color} = request.only(
         [
             'id_padre',
-            'id_hijo'
+            'id_hijo',
+            'color'
           
         ])                      
-    const relacion= await Database .insert({id_padre:id_padre,id_hijo:id_hijo,tipo:'secundarias'}).into('relacion_primarias')
+    const relacion= await Database .insert({id_padre:id_padre,id_hijo:id_hijo,tipo:'secundarias',color:color}).into('relacion_primarias')
     return response.json({message:'Creado'})
   }
   
@@ -374,7 +408,73 @@ async actualizar({request,response}){
          const tema = await Database.raw('SELECT COUNT(id) FROM temas')
         return response.json(tema)
   }
-
+  
+  
+  async posiblesNodosPadres({response, params})
+  {
+        const posiblesPadres = await Database.raw('SELECT id, nombre_tema, nivel FROM temas where nivel <= ?', [params.id])
+        return response.json(posiblesPadres)
+  }
+	
+	  async obtenerPadres({response, params})
+  {
+        const padres = await Database.raw('select distinct relacion_primarias.id_hijo, relacion_primarias.id_padre, temas.nombre_tema FROM relacion_primarias INNER JOIN temas ON relacion_primarias.id_hijo = temas.id WHERE relacion_primarias.id_hijo = ?;', [params.id])
+        return response.json(padres);
+  }
+  
+  
+    async obtenerPadresConNombre({response, params})
+  {
+        const padres = await Database.raw("select relacion_primarias.tipo, relacion_primarias.id_hijo, relacion_primarias.id_padre, th.nombre_tema as nombreHijo, tp.nombre_tema as nombrePadre FROM relacion_primarias  INNER JOIN temas as th ON relacion_primarias.id_hijo  = th.id  INNER JOIN temas as tp ON relacion_primarias.id_padre  = tp.id  WHERE relacion_primarias.id_hijo = ?;", [params.id])
+        return response.json(padres);
+  }
+  
+  async actualizarColor({request,response}){
+        var {id,color}= request.only([
+            'id',
+            'color'
+        ]) 
+        
+        id = id + "";
+        var nodos = id.split('-');
+       const padres = await Database.raw('update relacion_primarias set color = ? WHERE id_padre = ? AND id_hijo = ?;', [color, Number(nodos[0]), Number(nodos[1]) ])
+   
+      return response.json({message:nodos}) 
+    
+        
+  }
+	
+	async obtenerRadio({response}){
+		const radio = await Database.raw('SELECT radio FROM utilidades WHERE id = 1');
+		return response.json(radio);
+  }
+  
+	async actualizarRadio({response, params}){
+		var radio = [params.radio]
+		const query = await Database.raw('UPDATE utilidades SET radio = ? WHERE id = 1', radio);
+		return response.json({message:'Radio Actualizado'})
+	}
+  
+  
+  async obtenerAlumnos({response}){
+		const alumnos = await Database.raw('select id, nombre, apellido_paterno, apellido_materno, matricula, nivel_academico from kms.users where id_rol = 4;');
+		return response.json(alumnos);
+  }
+  
+  async obtenerArbol({response, params}){
+    var id_alumno = params.id;
+		const arbol = await Database.raw('select temas.nombre_tema,relacion_nodo_alumnos.id_tema, relacion_nodo_alumnos.ponderacion, relacion_nodo_alumnos.clasificacion from kms.relacion_nodo_alumnos inner join kms.temas on kms.temas.id = kms.relacion_nodo_alumnos.id_tema where id_alumno = ?;', id_alumno);
+		return response.json(arbol);
+  }
+  
+  
+  async obtenerConexiones({response, params}){
+    var id_nodo = params.id;
+		const arbol = await Database.raw('SELECT relacion_primarias.id_padre, relacion_primarias.id_hijo, temas.nombre_tema FROM kms.relacion_primarias inner join kms.temas on kms.temas.id = kms.relacion_primarias.id_padre where id_hijo = ?;', id_nodo);
+		return response.json(arbol);
+  }
+  
+  
   
 }
 

@@ -6,6 +6,22 @@ const Route = use('Route')
 const User = use('App/Models/User')
 //const Tema = use('App/Models/Tema')
 //ruta dashboard
+
+//RUTAS DEL ARBOL
+Route.get('/temas/posiblesNodosPadres/:id', 'TemaController.posiblesNodosPadres')
+Route.get('/temas/obtenerPadres/:id', 'TemaController.obtenerPadres')
+Route.get('/temas/obtenerPadresConNombre/:id', 'TemaController.obtenerPadresConNombre')
+Route.get('/tema/relacionesPrimarias','TemaController.verrelacion')
+Route.post('tema/addTema','TemaController.registrar');
+Route.post('tema/actualizarColor','TemaController.actualizarColor')
+Route.get('/tema/obtenerRadio','TemaController.obtenerRadio')
+Route.post('tema/actualizarRadio/:radio', 'TemaController.actualizarRadio')
+Route.get('/user/obtenerAlumnos','TemaController.obtenerAlumnos')
+Route.get('/user/obtenerArbol/:id','TemaController.obtenerArbol')
+Route.get('/obtenerConexiones/:id','TemaController.obtenerConexiones')
+
+// FIN DE RUTAS DEL ARBOL
+
 Route.get('/profesor/count','UserController.profesorcount')
 Route.get('/alumno/count','UserController.alumnocount')
 Route.get('/admin/count','UserController.adminscount')
@@ -19,7 +35,7 @@ Route.get('/',({view})=> view.render('login'))
 Route.post('login','UserController.login')
 Route.get('logout','UserController.logout')
 //Route.get('/app',({view})=> view.render('app'))
-Route.post('tema/addTema','TemaController.registrar')	
+
 Route.post('tema/deleteandcambiarPadre/:id','TemaController.deleteandcambiarPadre')
 Route.post('tema/cambiarPadre/:id','TemaController.cambiarPadre')
 Route.post('tema/hacerHijoPadre/:id','TemaController.hacerHijoPadre')
